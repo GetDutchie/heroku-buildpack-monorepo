@@ -20,6 +20,7 @@ APP_BASE="$(cat "${ENV_DIR}/APP_BASE")"
   rm "${BUILD_DIR}/${APP_BASE}/imports/ui" &&
   rm "${BUILD_DIR}/${APP_BASE}/client" &&
   mv "${BUILD_DIR}/${APP_BASE}/client-api" "${BUILD_DIR}/${APP_BASE}/client" &&
+  mv "${BUILD_DIR}/${APP_BASE}/client/main.html.disabled" "${BUILD_DIR}/${APP_BASE}/client/main.html"
   (echo "Removed all UI code for API Only" | indent)
 )
 
