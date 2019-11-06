@@ -14,15 +14,17 @@ if [ ! -f "${ENV_DIR}/APP_BASE" ]; then
 fi
 APP_BASE="$(cat "${ENV_DIR}/APP_BASE")"
 
-(
-  [ "$API_ONLY" == "TRUE" ] &&
-  rm "${BUILD_DIR}/${APP_BASE}/imports/startup" &&
-  rm "${BUILD_DIR}/${APP_BASE}/imports/ui" &&
-  rm "${BUILD_DIR}/${APP_BASE}/client" &&
-  mv "${BUILD_DIR}/${APP_BASE}/client-api" "${BUILD_DIR}/${APP_BASE}/client" &&
-  mv "${BUILD_DIR}/${APP_BASE}/client/main.html.disabled" "${BUILD_DIR}/${APP_BASE}/client/main.html"
-  (echo "Removed all UI code for API Only" | indent)
-)
+
+if [ "$API_ONLY" == "TRUE" ]; then
+  (
+    (echo "Removing all UI code for API Only" | indent)
+    rm -rf "${BUILD_DIR}/${APP_BASE}/imports/startup" &&
+    rm -rf "${BUILD_DIR}/${APP_BASE}/imports/ui" &&
+    rm -rf "${BUILD_DIR}/${APP_BASE}/client" &&
+    mv "${BUILD_DIR}/${APP_BASE}/client-api" "${BUILD_DIR}/${APP_BASE}/client" &&
+    mv "${BUILD_DIR}/${APP_BASE}/client/main.html.disabled" "${BUILD_DIR}/${APP_BASE}/client/main.html"
+  )
+fi
 
 (
     rm "${BUILD_DIR}/${APP_BASE}/imports/shared" &&
