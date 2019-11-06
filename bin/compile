@@ -15,6 +15,15 @@ fi
 APP_BASE="$(cat "${ENV_DIR}/APP_BASE")"
 
 (
+  [ "$API_ONLY" == "TRUE" ] &&
+  rm "${BUILD_DIR}/${APP_BASE}/imports/startup" &&
+  rm "${BUILD_DIR}/${APP_BASE}/imports/ui" &&
+  rm "${BUILD_DIR}/${APP_BASE}/client" &&
+  mv "${BUILD_DIR}/${APP_BASE}/client-api" "${BUILD_DIR}/${APP_BASE}/client" &&
+  (echo "Removed all UI code for API Only" | indent)
+)
+
+(
     rm "${BUILD_DIR}/${APP_BASE}/imports/shared" &&
     mv "${BUILD_DIR}/shared/imports" "${BUILD_DIR}/${APP_BASE}/imports/shared" &&
     mv "${BUILD_DIR}/${APP_BASE}" "${STAGE}" &&
@@ -28,4 +37,3 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Copied ${APP_BASE} to root of app successfully" | indent
-
